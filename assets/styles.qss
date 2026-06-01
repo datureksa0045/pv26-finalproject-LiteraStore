@@ -1,0 +1,96 @@
+QMainWindow {
+    background-color: #F4F6F9;
+}
+
+QWidget#sidebar {
+    background-color: #1E293B;
+    padding: 15px;
+}
+
+QLabel#logo {
+    color: #38BDF8;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 5px 25px 5px;
+}
+
+QWidget#sidebar QPushButton {
+    color: #94A3B8;
+    background-color: transparent;
+    border: none;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+QWidget#sidebar QPushButton:hover {
+    background-color: #334155;
+    color: #F8FAFC;
+}
+
+QWidget#sidebar QPushButton:checked {
+    background-color: #0284C7;
+    color: #FFFFFF;
+}
+
+QLineEdit, QComboBox {
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 6px 12px;
+    background-color: #FFFFFF;
+    color: #334155;
+    font-size: 13px;
+}
+
+QLineEdit:focus, QComboBox:focus {
+    border: 1px solid #38BDF8;
+}
+
+QTableWidget {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    gridline-color: #E2E8F0;
+    border-radius: 8px;
+    color: #334155;
+}
+
+QHeaderView::section {
+    background-color: #F8FAFC;
+    color: #475569;
+    padding: 8px;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #E2E8F0;
+}
+
+QPushButton {
+    background-color: #0EA5E9;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+QPushButton:hover {
+    background-color: #0284C7;
+}
+
+QPushButton#btnHapus {
+    background-color: #EF4444;
+}
+
+QPushButton#btnHapus:hover {
+    background-color: #DC2626;
+}
+
+QFrame#card {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 15px;
+}
