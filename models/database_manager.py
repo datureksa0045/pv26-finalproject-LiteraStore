@@ -1,20 +1,17 @@
 import sqlite3
 import os
 
-# --- KOREKSI PATH ABSOLUT AGAR TIDAK CRASH DI WINDOWS ---
-# Mendapatkan direktori absolut dari file database_manager.py ini berada
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CURRENT_DIR)
 DB_DIR = os.path.join(BASE_DIR, "database")
 DB_PATH = os.path.join(DB_DIR, "database.db")
 
-# Menentukan folder 'database' sejajar dengan folder 'models' (di dalam direktori utama LiteraStore)
-BASE_DIR = os.path.dirname(CURRENT_DIR) # hasil: LiteraStore/
+BASE_DIR = os.path.dirname(CURRENT_DIR) 
 DB_DIR = os.path.join(BASE_DIR, "database")
 DB_PATH = os.path.join(DB_DIR, "database.db")
 
 def init_db():
-    # Membuat folder 'database' secara aman jika belum ada
+    
     if not os.path.exists(DB_DIR):
         os.makedirs(DB_DIR)
         
