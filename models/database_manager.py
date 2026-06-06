@@ -3,7 +3,10 @@ import os
 
 # --- KOREKSI PATH ABSOLUT AGAR TIDAK CRASH DI WINDOWS ---
 # Mendapatkan direktori absolut dari file database_manager.py ini berada
-CURRENT_DIR = os.path.dirname(os.path.abspath(r"D:\Tugas Kuliah\Semester 6\Pemvis\LiteraStore\database")) # hasil: models/
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(CURRENT_DIR)
+DB_DIR = os.path.join(BASE_DIR, "database")
+DB_PATH = os.path.join(DB_DIR, "database.db")
 
 # Menentukan folder 'database' sejajar dengan folder 'models' (di dalam direktori utama LiteraStore)
 BASE_DIR = os.path.dirname(CURRENT_DIR) # hasil: LiteraStore/
@@ -141,3 +144,112 @@ def get_dashboard_stats():
     total_pendapatan = cursor.fetchone()[0] or 0.0
     conn.close()
     return total_buku, total_stok, total_pendapatan
+
+def get_total_transaksi():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM transaksi
+    """)
+
+    total = cursor.fetchone()[0]
+
+    conn.close()
+
+    return total
+
+def get_low_stock_books():
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT judul, stok
+        FROM buku
+        WHERE stok <= 5
+        ORDER BY stok ASC
+    """)
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+
+def get_best_selling_books():
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT b.judul,
+               SUM(t.jumlah_jual)
+        FROM transaksi t
+        JOIN buku b
+        ON b.id_buku=t.id_buku
+        GROUP BY t.id_buku
+        ORDER BY SUM(t.jumlah_jual) DESC
+        LIMIT 5
+    """)
+
+    data = cursor.fetchall()
+
+    conn.close()
+
+    return data
+def get_total_transaksi():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM transaksi")
+    total = cursor.fetchone()[0]
+
+    conn.close()
+    return total
+
+
+def get_best_selling_book():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT buku.judul,
+               SUM(transaksi.jumlah_jual) as total
+        FROM transaksi
+        JOIN buku ON transaksi.id_buku = buku.id_buku
+        GROUP BY buku.judul
+        ORDER BY total DESC
+        LIMIT 1
+    """)
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    if data:
+        return data[0]
+
+    return "Belum Ada"
+
+
+def get_low_stock_book():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT judul
+        FROM buku
+        ORDER BY stok ASC
+        LIMIT 1
+    """)
+
+    data = cursor.fetchone()
+
+    conn.close()
+
+    if data:
+        return data[0]
+
+    return "-"
