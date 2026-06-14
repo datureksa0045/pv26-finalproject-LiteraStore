@@ -9,6 +9,7 @@ from models import database_manager
 from views.dashboard_view import DashboardPage
 from views.buku_view import ManajemenBukuPage
 from views.transaksi_view import TransaksiPage
+from views.dashboard_pembeli_view import DashboardPembeliPage
 
 class LiteraStoreApp(QMainWindow):
     def __init__(self):
@@ -39,29 +40,42 @@ class LiteraStoreApp(QMainWindow):
         lbl_logo.setObjectName("logo")
         sidebar_layout.addWidget(lbl_logo)
         
-        self.btn_dash = QPushButton("Dashboard Analitik")
-        self.btn_buku = QPushButton("Manajemen Buku")
-        self.btn_transaksi = QPushButton("Kasir & Transaksi")
+        self.btn_dash_penjual = QPushButton(
+    "Dashboard Penjual"
+)
+        self.btn_dash_pembeli = QPushButton(
+    "Dashboard Pembeli"
+)
+        self.btn_buku = QPushButton(
+    "Manajemen Buku"
+)
+        self.btn_transaksi = QPushButton(
+    "Kasir & Transaksi"
+)
         
-        for btn in [self.btn_dash, self.btn_buku, self.btn_transaksi]:
+        for btn in [self.btn_dash_penjual, self.btn_dash_pembeli, self.btn_buku, self.btn_transaksi]:
             btn.setCheckable(True)
             sidebar_layout.addWidget(btn)
             
         main_layout.addWidget(sidebar)
         
         self.pages = QStackedWidget()
-        self.page_dashboard = DashboardPage()
+        self.page_dashboard_penjual = DashboardPage()
+        
+        self.page_dashboard_pembeli = DashboardPembeliPage()
         self.page_buku = ManajemenBukuPage()
         self.page_transaksi = TransaksiPage()
         
-        self.pages.addWidget(self.page_dashboard)
+        self.pages.addWidget(self.page_dashboard_penjual)
+        self.pages.addWidget(self.page_dashboard_pembeli)
         self.pages.addWidget(self.page_buku)
         self.pages.addWidget(self.page_transaksi)
         main_layout.addWidget(self.pages)
         
-        self.btn_dash.clicked.connect(lambda: self.switch_page(0))
-        self.btn_buku.clicked.connect(lambda: self.switch_page(1))
-        self.btn_transaksi.clicked.connect(lambda: self.switch_page(2))
+        self.btn_dash_penjual.clicked.connect(lambda: self.switch_page(0))
+        self.btn_dash_pembeli.clicked.connect(lambda: self.switch_page(1))
+        self.btn_buku.clicked.connect(lambda: self.switch_page(2))
+        self.btn_transaksi.clicked.connect(lambda: self.switch_page(3))
         
         self.switch_page(0)
 
@@ -93,13 +107,15 @@ class LiteraStoreApp(QMainWindow):
 
     def switch_page(self, index):
         self.pages.setCurrentIndex(index)
-        self.btn_dash.setChecked(index == 0)
-        self.btn_buku.setChecked(index == 1)
-        self.btn_transaksi.setChecked(index == 2)
-        
-        if index == 0: self.page_dashboard.refresh_stats()
-        elif index == 1: self.page_buku.load_data()
-        elif index == 2:
+        self.btn_dash_penjual.setChecked(index == 0)
+        self.btn_dash_pembeli.setChecked(index == 1)
+        self.btn_buku.setChecked(index == 2)
+        self.btn_transaksi.setChecked(index == 3)
+
+        if index == 0: self.page_dashboard_penjual.refresh_stats()
+        elif index == 1: self.page_dashboard_pembeli.load_data()
+        elif index == 2: self.page_buku.load_data()
+        elif index == 3:
             self.page_transaksi.load_buku_combobox()
             self.page_transaksi.load_transaksi()
 
