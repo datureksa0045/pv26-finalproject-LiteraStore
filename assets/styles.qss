@@ -1,21 +1,22 @@
 QMainWindow {
-    background-color: #F4F6F9;
+    background-color: #F7F2EC;
 }
 
 QWidget#sidebar {
-    background-color: #1E293B;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+        stop:0 #A67C52, stop:1 #7F5A3A);
     padding: 15px;
 }
 
 QLabel#logo {
-    color: #38BDF8;
+    color: #FFF8EE;
     font-size: 20px;
     font-weight: bold;
     padding: 10px 5px 25px 5px;
 }
 
 QWidget#sidebar QPushButton {
-    color: #94A3B8;
+    color: #F5EBDD;
     background-color: transparent;
     border: none;
     padding: 12px 15px;
@@ -27,13 +28,13 @@ QWidget#sidebar QPushButton {
 }
 
 QWidget#sidebar QPushButton:hover {
-    background-color: #334155;
-    color: #F8FAFC;
+    background-color: #8C6643;
+    color: #FFFDFB;
 }
 
 QWidget#sidebar QPushButton:checked {
-    background-color: #0284C7;
-    color: #FFFFFF;
+    background-color: #C79B72;
+    color: #FFFDFB;
 }
 
 QLineEdit, QComboBox {
@@ -67,8 +68,8 @@ QHeaderView::section {
 }
 
 QPushButton {
-    background-color: #0EA5E9;
-    color: white;
+    background-color: #A67C52;
+    color: #FFFDF9;
     border: none;
     padding: 8px 16px;
     font-weight: 600;
@@ -77,7 +78,7 @@ QPushButton {
 }
 
 QPushButton:hover {
-    background-color: #0284C7;
+    background-color: #8C6643;
 }
 
 QPushButton#btnHapus {
@@ -89,8 +90,8 @@ QPushButton#btnHapus:hover {
 }
 
 QFrame#card {
-    background-color: #FFFFFF;
-    border: 1px solid #E2E8F0;
+    background-color: #FFFDFB;
+    border: 1px solid #E6D8C8;
     border-radius: 10px;
     padding: 15px;
 }

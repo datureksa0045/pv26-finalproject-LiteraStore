@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#FFF9F3" stop-opacity="0.18"/>
+      <stop offset="0.45" stop-color="#EBDCCF" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#8A6547" stop-opacity="0.42"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(910 260) rotate(130) scale(460 420)">
+      <stop stop-color="#FFF9F3" stop-opacity="0.92"/>
+      <stop offset="0.35" stop-color="#E9D7C4" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#C6A07A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowRight" cx="0" cy="0" r="1" gradientTransform="translate(1070 660) rotate(120) scale(470 470)">
+      <stop stop-color="#A77E58" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#A77E58" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#glow)"/>
+  <rect width="1200" height="900" fill="url(#glowRight)"/>
+  <g filter="url(#blur)" opacity="0.66">
+    <rect x="110" y="180" width="180" height="280" rx="24" fill="#E2C9A8"/>
+    <rect x="210" y="140" width="180" height="320" rx="24" fill="#CFA77A"/>
+    <rect x="880" y="330" width="180" height="300" rx="24" fill="#E4D2BE"/>
+    <rect x="760" y="210" width="200" height="340" rx="28" fill="#B98F68"/>
+    <rect x="980" y="140" width="110" height="260" rx="18" fill="#D9BD9B"/>
+    <rect x="1045" y="220" width="130" height="310" rx="20" fill="#C79A73"/>
+    <rect x="910" y="520" width="170" height="250" rx="22" fill="#E2C9A8"/>
+  </g>
+  <g opacity="0.20" filter="url(#blur)">
+    <path d="M220 360H420" stroke="#7A5A3C" stroke-width="10" stroke-linecap="round"/>
+    <path d="M250 420H390" stroke="#7A5A3C" stroke-width="8" stroke-linecap="round"/>
+    <path d="M820 430H1025" stroke="#7A5A3C" stroke-width="10" stroke-linecap="round"/>
+    <path d="M850 490H980" stroke="#7A5A3C" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>
