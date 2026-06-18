@@ -134,7 +134,8 @@ class LiteraStoreApp(QMainWindow):
         self.setStatusBar(status)
 
         lbl_credits = QLabel(
-            "  Kelompok Mandiri LiteraStore | Anggota: [Nama - NIM] & [Nama Rekan - NIM]  "
+            "  LiteraStore | Datu Reksa Hamza Putra (F1D02310045) | "
+            "Nabila Zahirani (F1D02310019) | Rosida Asri Ardiani (F1D02410142)  "
         )
         status.showMessage(
             f"Login sebagai {self.user_data['role']} - {self.user_data['username']}"
