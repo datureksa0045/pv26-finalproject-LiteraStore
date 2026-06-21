@@ -15,7 +15,7 @@ class LiteraStoreApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("LiteraStore - Sistem Informasi & Manajemen Toko Buku Digital")
-        self.resize(1050, 650)
+        self.resize(1400, 800)
         
         database_manager.init_db()
         self.load_stylesheet(os.path.join("assets", "styles.qss"))

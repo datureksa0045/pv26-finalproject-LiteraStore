@@ -30,6 +30,16 @@ class TransaksiPage(QWidget):
         form_layout.addWidget(self.txt_jumlah, stretch=1)
         form_layout.addWidget(btn_proses)
         layout.addLayout(form_layout)
+
+        self.lbl_detail = QLabel()
+        self.lbl_detail.setStyleSheet("""
+        font-size:14px;
+        padding:10px;""")
+        
+        layout.addWidget(self.lbl_detail)
+        self.lbl_total = QLabel("Total Bayar : Rp 0")
+        self.lbl_total.setStyleSheet("""font-size:16px;font-weight:bold;""")
+        layout.addWidget(self.lbl_total)
         
         self.table = QTableWidget()
         self.table.setColumnCount(5)
@@ -45,6 +55,11 @@ class TransaksiPage(QWidget):
         export_layout.addWidget(btn_export)
         export_layout.addStretch()
         layout.addLayout(export_layout)
+        
+        self.cb_buku.currentIndexChanged.connect(
+        self.update_info)
+        self.txt_jumlah.textChanged.connect(
+        self.update_total)
         
         self.load_buku_combobox()
         self.load_transaksi()
@@ -107,3 +122,33 @@ class TransaksiPage(QWidget):
                 QMessageBox.information(self, "Berhasil", "Laporan berhasil diexport!")
             else:
                 QMessageBox.critical(self, "Gagal", f"Gagal mengekspor data: {msg}")
+    
+    def update_info(self):
+        data = self.cb_buku.currentData()
+        if not data:
+            return
+        self.lbl_detail.setText(
+            f"""
+            Judul : {data[1]}
+            Penulis : {data[2]}
+            Kategori : {data[3]}
+            Harga : Rp {data[4]:,.0f}
+            Stok : {data[5]}
+            """
+        )
+
+    def update_total(self):
+        data = self.cb_buku.currentData()
+        if not data:
+            return
+        try:
+            jumlah = int(
+                self.txt_jumlah.text()
+            )
+        except:
+            jumlah = 0
+            total = jumlah * data[4]
+            
+            self.lbl_total.setText(
+                f"Total Bayar : Rp {total:,.0f}"
+                )   
