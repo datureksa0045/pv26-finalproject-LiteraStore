@@ -90,14 +90,16 @@ class LiteraStoreApp(QMainWindow):
             self.btn_history.clicked.connect(lambda: self.switch_page(2))
             self.switch_page(0)
         else:
-            # Penjual: analitik + manajemen buku + kasir
+            # Penjual: buka dashboard dulu, halaman lain dibuat saat diklik.
             self.page_dashboard = DashboardPage()
-            self.page_buku = ManajemenBukuPage()
-            self.page_transaksi = TransaksiPage()
+            self.page_buku = None
+            self.page_transaksi = None
+            self.placeholder_buku = QWidget()
+            self.placeholder_transaksi = QWidget()
 
             self.pages.addWidget(self.page_dashboard)  # index 0
-            self.pages.addWidget(self.page_buku)  # index 1
-            self.pages.addWidget(self.page_transaksi)  # index 2
+            self.pages.addWidget(self.placeholder_buku)  # index 1
+            self.pages.addWidget(self.placeholder_transaksi)  # index 2
             main_layout.addWidget(self.pages)
 
             self.btn_dash.clicked.connect(lambda: self.switch_page(0))
@@ -105,6 +107,21 @@ class LiteraStoreApp(QMainWindow):
             self.btn_transaksi.clicked.connect(lambda: self.switch_page(2))
 
             self.switch_page(0)
+
+    def _replace_page(self, index, old_widget, new_widget):
+        current = self.pages.currentIndex()
+        self.pages.removeWidget(old_widget)
+        old_widget.deleteLater()
+        self.pages.insertWidget(index, new_widget)
+        self.pages.setCurrentIndex(current)
+
+    def ensure_seller_page(self, index):
+        if index == 1 and self.page_buku is None:
+            self.page_buku = ManajemenBukuPage()
+            self._replace_page(1, self.placeholder_buku, self.page_buku)
+        elif index == 2 and self.page_transaksi is None:
+            self.page_transaksi = TransaksiPage()
+            self._replace_page(2, self.placeholder_transaksi, self.page_transaksi)
 
     def load_stylesheet(self, filename):
         if os.path.exists(filename):
@@ -158,11 +175,12 @@ class LiteraStoreApp(QMainWindow):
                 self.page_dashboard.show_history()
             return
 
-        self.pages.setCurrentIndex(index)
-
         self.btn_dash.setChecked(index == 0)
         self.btn_buku.setChecked(index == 1)
         self.btn_transaksi.setChecked(index == 2)
+
+        self.ensure_seller_page(index)
+        self.pages.setCurrentIndex(index)
 
         if index == 0 and self.page_dashboard is not None:
             if hasattr(self.page_dashboard, "refresh_stats"):

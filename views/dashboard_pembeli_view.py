@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QCheckBox,
 )
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QPixmap
 
 import base64
@@ -361,11 +361,12 @@ class DashboardPembeliPage(QWidget):
         self.panel_history_layout.addWidget(self.history_frame)
         self.panel_history_layout.addStretch()
 
-        # default panel
-        self.show_home()
-
-        self.load_cart()
-        self.load_history()
+        self._data_loaded = False
+        self._initial_load_scheduled = False
+        self._set_visible_panel("home")
+        self.info.setText("Memuat katalog buku...")
+        self.btn_checkout.setEnabled(False)
+        self._schedule_initial_load()
 
     def _format_rp(self, value: float) -> str:
         # tanpa titik/koma ribuan
@@ -381,23 +382,39 @@ class DashboardPembeliPage(QWidget):
         self.panel_history_scroll.setVisible(is_history)
         self.search.setVisible(is_home)
 
+    def _schedule_initial_load(self):
+        if self._initial_load_scheduled:
+            return
+        self._initial_load_scheduled = True
+        QTimer.singleShot(100, self.refresh_stats)
+
     def show_home(self):
         self._set_visible_panel("home")
         self.panel_dashboard.show()
-        self.load_data()
+        if self._data_loaded:
+            self.load_data()
+        else:
+            self._schedule_initial_load()
 
     def show_cart(self):
         self._set_visible_panel("cart")
-        self.load_cart()
+        if self._data_loaded:
+            self.load_cart()
+        else:
+            self._schedule_initial_load()
 
     def show_history(self):
         self._set_visible_panel("history")
-        self.load_history()
+        if self._data_loaded:
+            self.load_history()
+        else:
+            self._schedule_initial_load()
 
     def refresh_stats(self):
         self.load_data()
         self.load_cart()
         self.load_history()
+        self._data_loaded = True
 
     def show_book_detail(self, book):
         dialog = BookDetailDialog(book, self)
